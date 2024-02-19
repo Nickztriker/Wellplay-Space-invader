@@ -19,7 +19,6 @@ class Spaceship{
         Texture2D image;
         Vector2 position;
         double lastFireTime;
-        //Add Sounds
-        Sound laserSound;
-        ///
+        Sound laserSound;//[Add Sounds]เสียงตอนยิง
+        
 };

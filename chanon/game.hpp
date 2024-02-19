@@ -12,14 +12,11 @@ class Game {
         void Update();
         void HandleInput();
         bool run;
-        ///
-        int lives; //Add Score
-        int score; //Add Score
-        ///
-        int highscore; //Add Highscore
-        ///
-        Music music; //Add Sounds
-        ///
+        int lives; 
+        int score; //[Add Score]ประกาศตัวแปร score
+        int highscore; //[Add Highscore]
+        Music music; //[Add Sounds]
+
     private:
         void DeleteInactiveLasers();
         std::vector<Obstacle> CreateObstacles();
@@ -31,13 +28,9 @@ class Game {
         void GameOver();
         void Reset();
         void InitGame();
-        ///
-        void checkForHighscore();//Add Highscore
-        ///
-        void saveHighscoreToFile(int highscore); //Add Highscore
-        ///
-        int loadHighscoreFromFile(); //Add Highscore
-        ///
+        void checkForHighscore();//[Add Highscore] 
+        void saveHighscoreToFile(int highscore); //[Add Highscore]
+        int loadHighscoreFromFile(); //[Add Highscore]
         Spaceship spaceship;
         std::vector<Obstacle> obstacles;
         std::vector<Alien> aliens;
@@ -48,7 +41,6 @@ class Game {
         MysteryShip mysteryship;
         float mysteryShipSpawnInterval;
         float timeLastSpawn;
-        //Add Sounds
-        Sound explosionSound;
-        ///
+        Sound explosionSound;//[Add Sounds] Explosion Sound
+        
 };

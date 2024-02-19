@@ -1,21 +1,20 @@
 #include "game.hpp"
 #include <iostream>
-//Add Highscore
-#include <fstream>
-///
+#include <fstream> //[Add Highscore] เรียกข้อมูลจากไฟล์ 
 
-//Add Sounds
-Game::Game()
+
+//[Add Sounds]
+Game::Game() //เริ่มเกม
 {
     music = LoadMusicStream("Sounds/music.ogg"); //Background Sound
     explosionSound = LoadSound("Sounds/explosion.ogg"); //Explosion Sound
-    PlayMusicStream(music);
+    PlayMusicStream(music); //เล่นเพลง
     InitGame();
 }
 ///
 
-//Add Sounds
-Game::~Game() {
+//[Add Sounds]
+Game::~Game() { //ปิเกม
     Alien::UnloadImages();
     UnloadMusicStream(music); //Background Sound
     UnloadSound(explosionSound); //Explosion Sound
@@ -188,10 +187,9 @@ void Game::CheckForCollisions()
         while(it != aliens.end()){
             if(CheckCollisionRecs(it -> getRect(), laser.getRect()))
             {
-                //Add Sounds
-                PlaySound(explosionSound);
-                //
-                //Add Score
+                PlaySound(explosionSound); //[Add Sounds]เสียงเมื่อยิงยานศัตรู
+                
+                //[Add Score]อัพเดต score
                 if(it -> type == 1) {
                     score += 100;
                 } else if (it -> type == 2) {
@@ -199,9 +197,8 @@ void Game::CheckForCollisions()
                 } else if(it -> type == 3) {
                     score += 300;
                 }
-                //Add Highscore
-                checkForHighscore();
                 ///
+                checkForHighscore();//[Add Highscore]              
                 it = aliens.erase(it);
                 laser.active = false;
             } else {
@@ -224,11 +221,11 @@ void Game::CheckForCollisions()
         if(CheckCollisionRecs(mysteryship.getRect(), laser.getRect())){
             mysteryship.alive = false;
             laser.active = false;
-            //Add Score
-            score += 500;
-            checkForHighscore();//Add Highscore           
+            
+            score += 500; //[Add Score] อัพเดต score ยานใหญ่
+            checkForHighscore();//[Add Highscore]          
             PlaySound(explosionSound);//Add Sounds
-            ///
+            
         }
     }
 
@@ -289,24 +286,22 @@ void Game::InitGame()
     timeLastAlienFired = 0.0;
     timeLastSpawn = 0.0;
     lives = 3;
-    ///
-    score = 0; //Add Score
-    ///
-    highscore = loadHighscoreFromFile();//Add Highscore
-    ///
+    score = 0; //[Add Score]
+    highscore = loadHighscoreFromFile();//[Add Highscore]
     run = true;
     mysteryShipSpawnInterval = GetRandomValue(10, 20);
 }
-//Add Highscore
+//[Add Highscore]เรียกฟังก์ชันจาก game.hpp
 void Game::checkForHighscore()
 {
     if(score > highscore) {
         highscore = score;
-        saveHighscoreToFile(highscore);
+        saveHighscoreToFile(highscore);//เซฟhighscore
     }
 }
+//เช็กค่าhighscoreตลอดเวลา
 
-//Add Highscore
+//[Add Highscore]ฟังก์ชันสำหรับเซฟhighscore
 void Game::saveHighscoreToFile(int highscore)
 {
     std::ofstream highscoreFile("highscore.txt");
@@ -317,7 +312,9 @@ void Game::saveHighscoreToFile(int highscore)
         std::cerr << "Failed to save highscore to file" << std::endl;
     }
 }
-////Add Highscore
+///
+
+//[Add Highscore] โหลดhighscore จากไฟล์
 int Game::loadHighscoreFromFile() {
     int loadedHighscore = 0;
     std::ifstream highscoreFile("highscore.txt");

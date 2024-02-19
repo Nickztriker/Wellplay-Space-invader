@@ -1,14 +1,15 @@
 #include <raylib.h>
 #include "game.hpp"
-#include <string> //Add Score
+#include <string> //[Add Score] ใช้เพราะ score เป็น string
 
-//Add Score
+//[Add Score] ฟังก์ชัน score
 std::string FormatWithLeadingZeros(int number, int width) {
     std::string numberText = std::to_string(number);
     int leadingZeros = width - numberText.length();
     return numberText = std::string(leadingZeros, '0') + numberText;
 }
-/////
+///
+
 int main()
 {
     Color grey = {29, 29, 27, 255};
@@ -18,9 +19,8 @@ int main()
     int windowHeight = 700;
 
     InitWindow(windowWidth + offset, windowHeight + 2 * offset, "C++ Space Invaders");
-    //Add Sounds
-    InitAudioDevice();
-    ///
+    InitAudioDevice();//[Add Sounds]
+
     Font font = LoadFontEx("Font/monogram.ttf", 64, 0, 0);
     Texture2D spaceshipImage = LoadTexture("Graphics/spaceship.png");
 
@@ -29,9 +29,7 @@ int main()
     Game game;
 
     while(WindowShouldClose() == false) {
-        //Add Sounds
-        UpdateMusicStream(game.music);
-        ///
+        UpdateMusicStream(game.music); //[Add Sounds]
         game.HandleInput();
         game.Update();
         BeginDrawing();
@@ -49,23 +47,21 @@ int main()
             DrawTextureV(spaceshipImage, {x, 745}, WHITE);
             x += 50;
         }
-        /////
-        //Add Score
+        
+        //[Add Score] : Display Score on the screen (ฟอนต์,คำ,{ขนาด,ขนาด})
         DrawTextEx(font, "SCORE", {50, 15}, 34, 2, yellow);
-        std::string scoreText = FormatWithLeadingZeros(game.score, 5);
+        std::string scoreText = FormatWithLeadingZeros(game.score, 5); //เรียกใช้ function FormatWithLeadingZeros 
         DrawTextEx(font, scoreText.c_str(), {50, 40}, 34, 2, yellow);
-        //Add Highscore
+
+        //[Add Highscore] Display Highscore on the screen
         DrawTextEx(font, "HIGH-SCORE", {570, 15}, 34, 2, yellow);
         std::string highscoreText = FormatWithLeadingZeros(game.highscore, 5);
         DrawTextEx(font, highscoreText.c_str(), {655, 40}, 34, 2, yellow);
-        /////
 
         game.Draw();
         EndDrawing();
     }
 
     CloseWindow();
-    ////Add Sounds
-    CloseAudioDevice();
-    ///
+    CloseAudioDevice();//[Add Sounds]ปิดเสียงเมื่อออกเกม
 }
