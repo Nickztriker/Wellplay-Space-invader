@@ -14,7 +14,7 @@ Game::Game() //เริ่มเกม
 ///
 
 //[Add Sounds]
-Game::~Game() { //ปิเกม
+Game::~Game() { //ปิดเกม
     Alien::UnloadImages();
     UnloadMusicStream(music); //Background Sound
     UnloadSound(explosionSound); //Explosion Sound
