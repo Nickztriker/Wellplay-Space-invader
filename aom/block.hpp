@@ -5,6 +5,6 @@ class Block{
      public:
       Block(Vector2 position);
       void Draw();
-    private
+    private:
       Vector2 position ;
 };

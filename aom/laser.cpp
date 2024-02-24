@@ -9,8 +9,22 @@ Laser::Laser(Vector2 position, int speed){
 }
 void Laser::Draw(){
     if(active)
-     DrawRectangle(position.x , position.y , 4 , 15 ,{243, 216 , 63 , 255} );
+     DrawRectangle(position.x , position.y , 4 , 15 ,{243, 216 , 63 , 255});
+     // 1,2 parameters specify x,y (top-left corner) 
+     // 3,4 parameters specify width,height (4*5 pixels)
+     // 5 parameters specify color
 }
+
+Rectangle Laser::getRect()
+{
+    Rectangle rect;
+    rect.x = position.x;
+    rect.y = position.y;
+    rect.width = 4;
+    rect.height = 15;
+    return rect;
+}
+
 void Laser::Update(){
     position.y += speed;
     if(active){
