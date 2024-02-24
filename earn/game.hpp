@@ -11,8 +11,8 @@ class Game {
         void Draw();
         void Update();
         void HandleInput();
-        //bool run;
-        //int lives;
+        bool run;
+        int lives;
         //int score;
         //int highscore;
         //Music music;
@@ -24,9 +24,9 @@ class Game {
         void MoveDownAliens(int distance); 
         void AlienShootLaser();
         void CheckForCollisions();
-        //void GameOver();
-        //void Reset();
-        //void InitGame();
+        void GameOver();
+        void Reset();
+        void InitGame();
         //void checkForHighscore();
         //void saveHighscoreToFile(int highscore);
         //int loadHighscoreFromFile();
@@ -40,6 +40,5 @@ class Game {
         MysteryShip mysteryship;
         float mysteryShipSpawnInterval;
         float timeLastSpawn;
-        int lives;
         //Sound explosionSound;
 };

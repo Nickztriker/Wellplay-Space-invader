@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include <iostream>
+#include <fstream>
 
 Game::Game()
 {
@@ -8,6 +9,8 @@ Game::Game()
     aliensDirection = 1;
     timeLastAlienFired = 0.0;
     timeLastSpawn = 0.0;
+    lives = 3
+    run = true;
     mysteryShipSpawnInterval = GetRandomValue(10,20);
 }
 
@@ -16,6 +19,7 @@ Game::~Game() {
 }
 
 void Game::Update() {
+    if(run) {
 
         double currentTime = GetTime();
         if(currentTime - timeLastSpawn > mysteryShipSpawnInterval) {
@@ -41,13 +45,13 @@ void Game::Update() {
         mysteryship.Update();
 
         CheckForCollisions();
-    } //else {
-        //if(IsKeyDown(KEY_ENTER)){
-            //Reset();
-            //InitGame();
-        //}
-    //}
-//}
+    } else {
+        if(IsKeyDown(KEY_ENTER)){
+            Reset();
+            InitGame();
+        }
+    }
+}
 
 void Game::Draw() {
     spaceship.Draw();
@@ -72,7 +76,7 @@ void Game::Draw() {
 }
 
 void Game::HandleInput() {
-    //if(run){
+    if(run){
         if(IsKeyDown(KEY_LEFT)) {
             spaceship.MoveLeft();
         } else if (IsKeyDown(KEY_RIGHT)){
@@ -81,7 +85,7 @@ void Game::HandleInput() {
             spaceship.FireLaser();
         }
     }
-//}
+}
 
 void Game::DeleteInactiveLasers()
 {
@@ -223,11 +227,10 @@ void Game::CheckForCollisions()
     for(auto& laser: alienLasers) {
         if(CheckCollisionRecs(laser.getRect(), spaceship.getRect())){
             laser.active = false;
-            std::cout << "Spaceship Hit" << std::endl;
-            //lives --;
-            //if(lives == 0) {
-                //GameOver();
-            //}
+            lives --;
+            if(lives == 0) {
+                GameOver();
+            }
         }
 
           for(auto& obstacle: obstacles){
@@ -258,9 +261,33 @@ void Game::CheckForCollisions()
         }
 
         if(CheckCollisionRecs(alien.getRect(), spaceship.getRect())) {
-            std::cout << "Spaceship hit by Alien" << std::endl;
-            //GameOver();
+            GameOver();
         }
     }
 }
 
+void Game::GameOver()
+{
+    run = false;
+}
+
+void Game::InitGame()
+{
+    obstacles = CreateObstacles();
+    aliens = CreateAliens();
+    aliensDirection = 1;
+    timeLastAlienFired = 0.0;
+    timeLastSpawn = 0.0;
+    lives = 3;
+    score = 0;
+    //highscore = loadHighscoreFromFile();
+    run = true;
+    mysteryShipSpawnInterval = GetRandomValue(10, 20);
+}
+
+void Game::Reset() {
+    spaceship.Reset();
+    aliens.clear();
+    alienLasers.clear();
+    obstacles.clear();
+}
