@@ -1,23 +1,21 @@
 #include "game.hpp"
 #include <iostream>
-#include <fstream>
 
 Game::Game()
 {
-    music = LoadMusicStream("Sounds/music.ogg");
-    explosionSound = LoadSound("Sounds/explosion.ogg");
-    PlayMusicStream(music);
-    InitGame();
+    obstacles = CreateObstacles();
+    aliens = CreateAliens();
+    aliensDirection = 1;
+    timeLastAlienFired = 0.0;
+    timeLastSpawn = 0.0;
+    mysteryShipSpawnInterval = GetRandomValue(10,20);
 }
 
 Game::~Game() {
     Alien::UnloadImages();
-    UnloadMusicStream(music);
-    UnloadSound(explosionSound);
 }
 
 void Game::Update() {
-    if(run) {
 
         double currentTime = GetTime();
         if(currentTime - timeLastSpawn > mysteryShipSpawnInterval) {
